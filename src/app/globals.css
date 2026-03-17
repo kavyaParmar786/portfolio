@@ -14,10 +14,17 @@
 
 
 /* ─── Custom cursor ─── */
-/* Hide default cursor on desktop — CursorEffect canvas replaces it */
+/* Hide default cursor — our JS cursor replaces it.
+   IMPORTANT: inputs/buttons keep pointer so they remain clickable */
 @media (pointer: fine) {
-  *, *::before, *::after {
-    cursor: none !important;
+  body {
+    cursor: none;
+  }
+  a, button, [role="button"], label {
+    cursor: none;
+  }
+  input, textarea, select {
+    cursor: text;
   }
 }
 
