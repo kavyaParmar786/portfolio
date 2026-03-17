@@ -14,18 +14,11 @@
 
 
 /* ─── Custom cursor ─── */
-/* Hide default cursor — our JS cursor replaces it.
-   IMPORTANT: inputs/buttons keep pointer so they remain clickable */
+/* Only hide cursor on body — inputs/selects always keep their native cursor */
 @media (pointer: fine) {
-  body {
-    cursor: none;
-  }
-  a, button, [role="button"], label {
-    cursor: none;
-  }
-  input, textarea, select {
-    cursor: text;
-  }
+  body { cursor: none; }
+  input, textarea, select, [contenteditable] { cursor: text !important; }
+  button, a, [role="button"] { cursor: pointer !important; }
 }
 
 /* ─── Scrollbar ─── */
