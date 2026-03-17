@@ -17,7 +17,7 @@ export function GlassCard({
     <div
       className={cn(
         "glass rounded-2xl animated-border",
-        hover && "glass-hover cursor-default",
+        hover && "glass-hover",
         glow && "shadow-glow",
         className
       )}
