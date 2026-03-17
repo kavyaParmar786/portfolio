@@ -31,6 +31,7 @@ interface FormData {
   username: string;
   discordUsername: string;
   discordId: string;
+  plan: string;
   botType: string;
   features: string;
   budget: string;
@@ -42,6 +43,7 @@ const EMPTY: FormData = {
   username: "",
   discordUsername: "",
   discordId: "",
+  plan: "",
   botType: "",
   features: "",
   budget: "",
@@ -158,7 +160,84 @@ export default function OrderForm() {
               /* Plain HTML form — no motion wrapper */
               <form onSubmit={handleSubmit} className="space-y-5">
 
-                {/* Row 1 */}
+
+                {/* Plan Selector */}
+                <div className="space-y-2">
+                  <label className="font-mono text-xs text-slate-400 tracking-wide">
+                    Select Plan <span className="text-cyan-400">*</span>
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {([
+                      { id: "starter", name: "Starter", price: "", desc: "Basic setup" },
+                      { id: "pro",     name: "Pro",     price: "", desc: "Full suite", popular: true },
+                      { id: "enterprise", name: "Enterprise", price: "", desc: "Custom + source" },
+                    ] as const).map((p) => (
+                      <button
+                        key={p.id}
+                        type="button"
+                        onClick={() => setForm((f) => ({ ...f, plan: p.id }))}
+                        style={{
+                          borderRadius: 12,
+                          padding: "12px 8px",
+                          border: form.plan === p.id
+                            ? "1.5px solid rgba(34,211,238,0.7)"
+                            : "1px solid rgba(255,255,255,0.08)",
+                          background: form.plan === p.id
+                            ? "rgba(34,211,238,0.08)"
+                            : "rgba(255,255,255,0.02)",
+                          boxShadow: form.plan === p.id
+                            ? "0 0 16px rgba(34,211,238,0.15)"
+                            : "none",
+                          cursor: "pointer",
+                          transition: "all 0.2s",
+                          textAlign: "center",
+                          position: "relative",
+                        }}
+                      >
+                        {"popular" in p && p.popular && (
+                          <span style={{
+                            position: "absolute",
+                            top: -10, left: "50%",
+                            transform: "translateX(-50%)",
+                            background: "linear-gradient(135deg,#22d3ee,#60a5fa)",
+                            color: "#020408",
+                            fontSize: 9,
+                            fontFamily: "var(--font-mono)",
+                            fontWeight: 700,
+                            padding: "2px 8px",
+                            borderRadius: 99,
+                            whiteSpace: "nowrap",
+                            letterSpacing: "0.05em",
+                          }}>POPULAR</span>
+                        )}
+                        <div style={{
+                          fontFamily: "var(--font-display)",
+                          fontSize: 18,
+                          fontWeight: 800,
+                          color: form.plan === p.id ? "#22d3ee" : "#e2e8f0",
+                          marginBottom: 2,
+                        }}>{p.price}</div>
+                        <div style={{
+                          fontFamily: "var(--font-display)",
+                          fontSize: 12,
+                          fontWeight: 700,
+                          color: form.plan === p.id ? "#22d3ee" : "#94a3b8",
+                          marginBottom: 2,
+                        }}>{p.name}</div>
+                        <div style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: 10,
+                          color: "#475569",
+                        }}>{p.desc}</div>
+                      </button>
+                    ))}
+                  </div>
+                  {!form.plan && (
+                    <p className="font-mono text-xs text-slate-600">Choose a plan to get started</p>
+                  )}
+                </div>
+
+                {/* Row 1 */
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Field label="Your Name / Username" required>
                     <input
